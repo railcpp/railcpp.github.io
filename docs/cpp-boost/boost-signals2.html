@@ -1,0 +1,131 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+<!-- begin head -->
+
+<title>boost::signals2 - c++ boost</title>
+
+<style>
+#body { width:1024px;margin:auto;}
+h1 {text-align:center;background:#eee;padding:10px;margin:0 auto 10px;}
+#foot {text-align:center}
+#pagecontent {width:90%;margin:10px auto 10px;background:#eee;padding:10px;}
+.code_pre {border-left:2px solid #000;border-right:none;border-top:5px solid #f00;border-bottom:5px solid #00f;margin:10x;padding:10px;border-radius:3px;}
+</style>
+
+<!-- end head -->
+</head>
+
+<body>
+<div id="body">
+<!-- begin body -->
+
+<h1>boost::signals2 - c++ boost</h1>
+
+<div id="pagecontent">
+
+<p>boost::signals2 is a signal/slot implementation by boost c++ library.</p>
+
+<p>boost::signal2 makes event programming simple anywhere across any c++ code.</p>
+
+<p>boost::signals2 c++ example:</p>
+
+<pre class="code_pre">
+#include &lt;boost/signals2.hpp&gt;
+#include &lt;string&gt;
+#include &lt;iostream&gt;
+#include &lt;functional&gt;
+
+namespace bsig = boost::signals2;
+using std::string_literals::operator""s;
+
+namespace asig
+{
+	using signal_type = bsig::signal&lt;bool(std::string)&gt;;
+	using slot_type = asig::signal_type::slot_type;
+	using connection_type = bsig::connection;
+	using dint = int;
+}
+
+namespace render
+{
+	// A cube also plays as event source.
+	class cube
+	{
+	private:
+		asig::signal_type __signal;
+	public:
+		asig::connection_type connect(const asig::dint prior, const asig::slot_type & slot__)
+		{
+			return __signal.connect(prior, slot__);
+		}
+	public:
+		void draw(const asig::dint id__)
+		{
+			auto result = __signal(
+				"A cube is rendering: id "s + std::to_string(id__)
+			);
+			if (result && * result)
+				std::cout &lt;&lt; "signal OK\n";
+			else
+				std::cout &lt;&lt; "signal has error\n";
+		}
+	};
+
+	// A viewer
+	class logger
+	{
+	private:
+		asig::connection_type __connection;
+	public:
+		virtual ~logger()
+		{
+			__connection.disconnect();
+		}
+	public:
+		logger(const asig::dint prior__, render::cube & cube__):
+			__connection{
+				cube__.connect(
+					prior__,
+					std::bind(
+						&render::logger::update,
+						this,
+						std::placeholders::_1
+					)
+				)
+			}
+		{
+		}
+	public:
+		bool update(const std::string & msg__)
+		{
+			std::cout &lt;&lt; "msg: " &lt;&lt; msg__ &lt;&lt; std::endl;
+			return true;
+		}
+	};
+}
+
+int main()
+{
+	render::cube cube;
+	render::logger logger{1, cube};
+	render::logger logger2{2, cube};
+	cube.draw(1000);
+}
+</pre>
+
+</div>	<!-- id="pagecontent" -->
+
+<div id="foot">
+<p><hr></p>
+<p>
+<a href=".">Parent</a>
+</p>
+</div>	<!-- id="foot" -->
+
+<!-- end body -->
+</div>
+</body>
+
+</html>
