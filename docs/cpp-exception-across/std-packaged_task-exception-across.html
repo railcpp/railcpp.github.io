@@ -1,0 +1,137 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+<!-- begin head -->
+
+<title>std::packaged_task: exception across threads</title>
+
+<style>
+#body { width:1024px;margin:auto;}
+h1 {text-align:center;background:#eee;padding:10px;margin:0 auto 10px;}
+#foot {text-align:center}
+#pagecontent {width:90%;margin:10px auto 10px;background:#eee;padding:10px;}
+.code_pre {border-left:2px solid #000;border-right:none;border-top:5px solid #f00;border-bottom:5px solid #00f;margin:10x;padding:10px;border-radius:3px;}
+</style>
+
+<!-- end head -->
+</head>
+
+<body>
+<div id="body">
+<!-- begin body -->
+
+<h1>std::packaged_task: exception across threads</h1>
+
+<div id="pagecontent">
+
+<!---------------------------------------->
+
+<p>std::packaged_task is a facility of c++ asynchronous programming std::future.</p>
+
+<p>std::packaged_task can make exception across threading work.</p>
+
+<pre class="code_pre">
+#include &lt;future&gt;
+#include &lt;iostream&gt;
+#include &lt;thread&gt;
+#include &lt;chrono&gt;
+#include &lt;functional&gt;
+#include &lt;complex&gt;	// std::sqrt
+#include &lt;memory&gt;
+#include &lt;mutex&gt;
+
+namespace across
+{
+	std::mutex print_mutex;
+
+	class my_task_class
+	{
+	private:
+		std::shared_ptr&lt;std::packaged_task&lt;double(int)&gt;&gt; __task;
+		std::jthread __thrd;
+		std::future&lt;double&gt; __future;
+	public:
+		my_task_class()
+		{
+		}
+	public:
+		virtual ~my_task_class()
+		{
+			__task = {};
+		}
+	public:
+		void run(int value)
+		{
+			__task = std::make_shared&lt;std::packaged_task&lt;double(int)&gt;&gt;(
+				std::bind(
+					&across::my_task_class::my_task,
+					this,
+					std::placeholders::_1
+				)
+			);
+			__future = __task-&gt;get_future();
+			__thrd = std::jthread{
+				std::move(* std::move(__task)),
+				value
+			};
+			__task = {};
+		}
+	public:
+		double get()
+		{
+			return __future.get();
+		}
+	protected:
+		double my_task(int x)
+		{
+			if (x &lt; 0)
+				throw std::runtime_error{"Error: Negative Value!"};
+			return std::sqrt(x);
+		}
+	};
+}
+
+int main()
+{
+	for (int i=-3; i&lt;=3; ++i)
+	{
+		across::my_task_class task;
+		try
+		{
+			task.run(i);
+			double result = task.get();
+			std::unique_lock&lt;std::mutex&gt; lock{across::print_mutex};
+			std::cout &lt;&lt; "Result: " &lt;&lt; result &lt;&lt; std::endl;
+		}
+		catch (const std::exception & e)
+		{
+			std::unique_lock&lt;std::mutex&gt; lock{across::print_mutex};
+			std::cout &lt;&lt; "c++ std::exception: " &lt;&lt; e.what() &lt;&lt; std::endl;
+		}
+	}
+}
+</pre>
+
+<!---------------------------------------->
+
+<hr />
+
+<p>
+Mon Aug 11 11:21:51 PM UTC 2025
+</p>
+
+</div>	<!-- id="pagecontent" -->
+
+<div id="foot">
+<p><hr></p>
+<p>
+<a href=".">Parent</a>
+</p>
+</div>	<!-- id="foot" -->
+
+<!-- end body -->
+</div>
+</body>
+
+</html>

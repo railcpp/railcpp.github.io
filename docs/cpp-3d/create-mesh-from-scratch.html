@@ -1,0 +1,88 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+<!-- begin head -->
+
+<title>Create Mesh From Scratch - c++ 3D</title>
+
+<style>
+#body { width:1024px;margin:auto;}
+h1 {text-align:center;background:#eee;padding:10px;margin:0 auto 10px;}
+#foot {text-align:center}
+#pagecontent {width:90%;margin:10px auto 10px;background:#eee;padding:10px;}
+.code_pre {border-left:2px solid #000;border-right:none;border-top:5px solid #f00;border-bottom:5px solid #00f;margin:10x;padding:10px;border-radius:3px;}
+</style>
+
+<!-- end head -->
+</head>
+
+<body>
+<div id="body">
+<!-- begin body -->
+
+<h1>Create Mesh From Scratch - c++ 3D</h1>
+
+<div id="pagecontent">
+
+<!---------------------------------------->
+
+<h2>Vertices and Indices</h2>
+
+<p>Vertices are a list of 3D triangles in the 3D space.</p>
+
+<p>Indices are a list of vertices orders about how the triangles are composed together.</p>
+
+<p>First, a mesh must have vertices and indices, it should be an empty mesh in 3D space.</p>
+
+<h2>Mesh Buffers</h2>
+
+<p>Create a mesh buffer class object, then add vertices and indices to the mesh buffer.</p>
+
+<p>And also, the material can be created and bound the the mesh buffer too.</p>
+
+<h2>A Mesh</h2>
+
+<p>A mesh can be pushed with many mesh buffers, every mesh buffer is a drawing call.</p>
+
+<h2>Composed Mesh</h2>
+
+<p>Many meshes can compose to a composed mesh.</p>
+
+<hr />
+
+<pre class="code_pre">
+auto * mesh = new my_3d_mesh;
+mesh->add_mesh_buffer(mesh_buffer);
+delete mesh_buffer;
+mesh_buffer = nullptr;
+auto * comp_mesh = new comp_mesh;
+comp_mesh->add_mesh(mesh);
+delete mesh;
+mesh = nullptr;
+delete comp_mesh;
+com_mesh = nullptr;
+</pre>
+
+<!---------------------------------------->
+
+<hr />
+
+<p>
+Mon Aug 11 11:37:27 PM UTC 2025
+</p>
+
+</div>	<!-- id="pagecontent" -->
+
+<div id="foot">
+<p><hr></p>
+<p>
+<a href=".">Parent</a>
+</p>
+</div>	<!-- id="foot" -->
+
+<!-- end body -->
+</div>
+</body>
+
+</html>

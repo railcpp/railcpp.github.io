@@ -4,7 +4,7 @@
 <head>
 <!-- begin head -->
 
-<title>std::cout - c++</title>
+<title>Light Map - c++ 3D</title>
 
 <style>
 #body { width:1024px;margin:auto;}
@@ -21,26 +21,43 @@ h1 {text-align:center;background:#eee;padding:10px;margin:0 auto 10px;}
 <div id="body">
 <!-- begin body -->
 
-<h1>std::cout - c++</h1>
+<h1>Light Map - c++ 3D</h1>
 
 <div id="pagecontent">
 
 <!---------------------------------------->
 
-<p>std::cout is the printer object of c++ programming language.</p>
+<h2>Light</h2>
 
-<p>Print an int with std::cout:</p>
+<p>The scene world must have light.</p>
+
+<h2>Enable Lighting</h2>
+
+<p>The target rendering object must enable lighting.</p>
+
+<h2>Material Light Map Type</h2>
+
+<p>Material type must be set to any one of supported light map type.</p>
+
+<h2>Two Layers of Texture</h2>
+
+<p>Tex 0 is used as solid material texture.</p>
+
+<p>Tex 1 is used as light map lighting material texture.</p>
+
+<h2>Texture UV supports Light Map</h2>
+
+<p>Upgrade texture UV to support light map.</p>
+
+<hr />
 
 <pre class="code_pre">
-int x = 123456789;
-std::cout << x << std::endl;
-</pre>
-
-<p>Print a std::string with std::cout:</p>
-
-<pre class="code_pre">
-std::string str = "Hello, c++ World!";
-std::cout << str << std::endl;
+auto * object = new d_3d::light_map_object;
+object->set_material_type(d_3d::light_map_type);
+object->set_texture(0, tex0_image);
+object->set_texture(1, tex1_image);
+delete object;
+object = nullptr;
 </pre>
 
 <!---------------------------------------->
@@ -48,7 +65,7 @@ std::cout << str << std::endl;
 <hr />
 
 <p>
-Mon Aug 11 11:18:08 PM UTC 2025
+Mon Aug 11 11:48:24 PM UTC 2025
 </p>
 
 </div>	<!-- id="pagecontent" -->

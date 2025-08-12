@@ -1,0 +1,99 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+<!-- begin head -->
+
+<title>Render Pass - c++ 3D</title>
+
+<style>
+#body { width:1024px;margin:auto;}
+h1 {text-align:center;background:#eee;padding:10px;margin:0 auto 10px;}
+#foot {text-align:center}
+#pagecontent {width:90%;margin:10px auto 10px;background:#eee;padding:10px;}
+.code_pre {border-left:2px solid #000;border-right:none;border-top:5px solid #f00;border-bottom:5px solid #00f;margin:10x;padding:10px;border-radius:3px;}
+</style>
+
+<!-- end head -->
+</head>
+
+<body>
+<div id="body">
+<!-- begin body -->
+
+<h1>Render Pass - c++ 3D</h1>
+
+<div id="pagecontent">
+
+<!---------------------------------------->
+
+<h2>Pre Render</h2>
+
+<p>Clear previous information, store new information, turn off all lights.</p>
+
+<h2>Post Render</h2>
+
+<p>Turn on all lights.</p>
+
+<h2>Render Pass Pre Render</h2>
+
+<p>If object is solid, turn on all lights.</p>
+
+<h2>Render Pass Post Render</h2>
+
+<p>If object is solid, turn off all lights.</p>
+
+<h2>Node Pre Render</h2>
+
+<p>If node is satisfied node, turn on lights.</p>
+
+<h2>Node Post Render</h2>
+
+<p>If node is satisfied node, turn off lights.</p>
+
+<hr />
+
+<pre class="code_pre">
+class my_render_pass_man: virtual public d_3d::system_render_pass_man
+{
+public:
+	void on_pre_render() override
+	{
+		// clear old information
+		// store new information
+		// turn off lights
+	}
+	void on_post_render() override
+	{
+		// turn on lights
+	}
+};
+
+auto * render_pass = new my_render_pass_man;
+
+delete render_pass;
+render_pass = nullptr;
+</pre>
+
+<!---------------------------------------->
+
+<hr />
+
+<p>
+Tue Aug 12 12:12:23 AM UTC 2025
+</p>
+
+</div>	<!-- id="pagecontent" -->
+
+<div id="foot">
+<p><hr></p>
+<p>
+<a href=".">Parent</a>
+</p>
+</div>	<!-- id="foot" -->
+
+<!-- end body -->
+</div>
+</body>
+
+</html>

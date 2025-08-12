@@ -1,0 +1,101 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+<!-- begin head -->
+
+<title>Normal Map - c++ 3D</title>
+
+<style>
+#body { width:1024px;margin:auto;}
+h1 {text-align:center;background:#eee;padding:10px;margin:0 auto 10px;}
+#foot {text-align:center}
+#pagecontent {width:90%;margin:10px auto 10px;background:#eee;padding:10px;}
+.code_pre {border-left:2px solid #000;border-right:none;border-top:5px solid #f00;border-bottom:5px solid #00f;margin:10x;padding:10px;border-radius:3px;}
+</style>
+
+<!-- end head -->
+</head>
+
+<body>
+<div id="body">
+<!-- begin body -->
+
+<h1>Normal Map - c++ 3D</h1>
+
+<div id="pagecontent">
+
+<!---------------------------------------->
+
+<h2>Normal Map</h2>
+
+<p>Also named bump map</p>
+<p>And parallax map</p>
+
+<h2>Light</h2>
+
+<p>The 3D scene world must have light.</p>
+
+<h2>Enable Lighting</h2>
+
+<p>The target object must enable lighting.</p>
+
+<h2>Material Type Normal Map</h2>
+
+<p>Set material type of object to normal map type.</p>
+
+<h2>Two Layers of Textures</h2>
+
+<p>Tex0 is used as solid texture.</p>
+<p>Tex1 is used as normal map texture.</p>
+
+<h2>Vertex Texture Coordinates</h2>
+
+<p>Upgrade texture UV to support normal map.</p>
+
+<h2>Texture image bump</h2>
+
+<p>Upgrade loaded texture image to let it bump.</p>
+
+<h2>Planar Mapping</h2>
+
+<p>Use planar mapping to make surface smooth.</p>
+
+<h2>Surface Param</h2>
+
+<p>Adjust surface param floating bits.</p>
+
+<hr />
+
+<pre class="code_pre">
+auto * object = new d_3d::normal_map_object;
+object->set_material_type(d_3d::normal_map_type);
+object->set_texture(0, tex0_image);
+tex1_image->make_normal_mapping();
+object->set_texture(1, tex1_image);
+delete object;
+object = nullptr;
+</pre>
+
+<!---------------------------------------->
+
+<hr />
+
+<p>
+Tue Aug 12 12:01:44 AM UTC 2025
+</p>
+
+</div>	<!-- id="pagecontent" -->
+
+<div id="foot">
+<p><hr></p>
+<p>
+<a href=".">Parent</a>
+</p>
+</div>	<!-- id="foot" -->
+
+<!-- end body -->
+</div>
+</body>
+
+</html>
